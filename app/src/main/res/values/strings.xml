@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SimplePlayer</string>
+    <string name="title_music">Music</string>
+    <string name="title_albums">Albums</string>
+    <string name="title_playlists">Playlists</string>
+    <string name="title_settings">Settings</string>
+</resources>
