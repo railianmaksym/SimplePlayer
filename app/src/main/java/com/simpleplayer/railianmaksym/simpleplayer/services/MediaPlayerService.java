@@ -10,7 +10,11 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.simpleplayer.railianmaksym.simpleplayer.MyApplication;
+
 import java.io.IOException;
+
+import javax.inject.Inject;
 
 /**
  * Created by raili on 03.04.2018.
@@ -22,15 +26,14 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         AudioManager.OnAudioFocusChangeListener  {
 
     private final IBinder iBinder = new LocalBinder();
-    private MediaPlayer mediaPlayer;
+    @Inject
+     MediaPlayer mediaPlayer;
     private String mediaFile;
     private int resumePosition;
-    private AudioManager audioManager;
+    AudioManager audioManager;
 
     private void initMediaPlayer() {
-        if(mediaPlayer==null) {
-            mediaPlayer = new MediaPlayer();
-        }
+            ((MyApplication) getApplicationContext()).getAppComponent().inject(this);
             mediaPlayer.setOnCompletionListener(this);
             mediaPlayer.setOnErrorListener(this);
             mediaPlayer.setOnPreparedListener(this);
@@ -50,6 +53,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
     }
 
+
     private void playMedia() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
@@ -65,14 +69,14 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         }
     }
 
-    private void pauseMedia() {
+    public void pauseMedia() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
         }
     }
 
-    private void resumeMedia() {
+    public void resumeMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
@@ -208,4 +212,6 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         }
         removeAudioFocus();
     }
+
+
 }

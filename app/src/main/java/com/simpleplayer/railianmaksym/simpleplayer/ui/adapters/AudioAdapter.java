@@ -22,13 +22,11 @@ import butterknife.ButterKnife;
  */
 
 public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.ViewHolder> {
-    AudioManager audioManager;
-    Context context;
-    List<Audio> audioList;
+    private AudioManager audioManager;
+    private List<Audio> audioList;
 
-    public AudioAdapter(AudioManager audioManager, Context context, List<Audio> audioList) {
+    AudioAdapter(AudioManager audioManager, List<Audio> audioList) {
         this.audioManager = audioManager;
-        this.context = context;
         this.audioList = audioList;
     }
 
@@ -41,7 +39,7 @@ public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.ViewHolder> 
     public void onBindViewHolder(AudioAdapter.ViewHolder holder, int position) {
     holder.song_name.setText(audioList.get(position).getTitle());
     holder.music_card.setOnClickListener(view->{
-    audioManager.playAudio(audioList.get(position).getData());
+    audioManager.playAudioFromDevice(position);
     });
     }
 
@@ -50,13 +48,13 @@ public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.ViewHolder> 
         return audioList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.song_name)
         TextView song_name;
         @BindView(R.id.music_card)
         ConstraintLayout music_card;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }

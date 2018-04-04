@@ -16,8 +16,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.simpleplayer.railianmaksym.simpleplayer.MyApplication;
 import com.simpleplayer.railianmaksym.simpleplayer.R;
 import com.simpleplayer.railianmaksym.simpleplayer.managers.AudioManager;
 import com.simpleplayer.railianmaksym.simpleplayer.repository.Audio;
@@ -27,10 +29,24 @@ import com.simpleplayer.railianmaksym.simpleplayer.ui.fragments.MusicFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.playButton)
+    ImageButton playButton;
+    @BindView(R.id.nextButton)
+    ImageButton nextButton;
+    @BindView(R.id.prevButton)
+    ImageButton prevButton;
 
     private FrameLayout container;
     boolean serviceBound = false;
+    @Inject
     AudioManager audioManager;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -56,11 +72,12 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ButterKnife.bind(this);
+        ((MyApplication) getApplicationContext()).getAppComponent().inject(this);
         container =findViewById(R.id.fragments_container);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        audioManager=new AudioManager(this);
+
     }
 
     public  void goToFragment(View Conteiner, android.support.v4.app.Fragment fragment){
@@ -86,6 +103,21 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         audioManager.unBoundService();
+    }
+
+    @OnClick(R.id.nextButton)
+    void playNextTrack(){
+        audioManager.playNextTrack();
+    }
+
+    @OnClick(R.id.prevButton)
+    void playPrevTrack(){
+        audioManager.playPrevTrack();
+    }
+
+    @OnClick(R.id.playButton)
+    void pauseTrack(){
+        audioManager.pauseTrack();
     }
 
 }

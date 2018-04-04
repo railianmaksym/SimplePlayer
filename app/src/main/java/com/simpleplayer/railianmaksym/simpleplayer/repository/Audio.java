@@ -3,18 +3,26 @@ package com.simpleplayer.railianmaksym.simpleplayer.repository;
 
 import java.io.Serializable;
 
-public class Audio implements Serializable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Audio extends RealmObject {
+    @PrimaryKey
+    private  int id;
     private String data;
     private String title;
     private String album;
     private String artist;
 
-    public Audio(String data, String title, String album, String artist) {
+    public Audio(int id, String data, String title, String album, String artist) {
+        this.id = id;
         this.data = data;
         this.title = title;
         this.album = album;
         this.artist = artist;
+    }
+
+    public Audio() {
     }
 
     public String getData() {

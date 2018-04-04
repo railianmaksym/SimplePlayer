@@ -44,7 +44,7 @@ public class AlphabetTitleAdapter extends RecyclerView.Adapter<AlphabetTitleAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
     holder.music_alphabet_title.setText(titles.get(position));
     holder.music_recyclerview.setLayoutManager(new LinearLayoutManager(context));
-    holder.music_recyclerview.setAdapter(new AudioAdapter(audioManager,context,audioList));
+    holder.music_recyclerview.setAdapter(new AudioAdapter(audioManager,audioList));
     }
 
     @Override

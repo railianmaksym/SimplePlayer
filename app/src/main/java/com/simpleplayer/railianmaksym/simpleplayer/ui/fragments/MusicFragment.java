@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simpleplayer.railianmaksym.simpleplayer.MyApplication;
 import com.simpleplayer.railianmaksym.simpleplayer.R;
 import com.simpleplayer.railianmaksym.simpleplayer.managers.AudioManager;
 import com.simpleplayer.railianmaksym.simpleplayer.ui.adapters.AlphabetTitleAdapter;
@@ -16,14 +17,15 @@ import com.simpleplayer.railianmaksym.simpleplayer.ui.adapters.AlphabetTitleAdap
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by raili on 02.04.2018.
- */
+
 
 public class MusicFragment extends BaseFragment {
+    @Inject
     AudioManager audioManager;
     RecyclerView music_RV;
     List<String> titles=new ArrayList<>();
@@ -31,7 +33,7 @@ public class MusicFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        audioManager=new AudioManager(getContext());
+        ((MyApplication) getContext().getApplicationContext()).getAppComponent().inject(this);
     }
 
 

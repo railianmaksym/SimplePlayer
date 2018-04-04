@@ -2,19 +2,25 @@ package com.simpleplayer.railianmaksym.simpleplayer.repository;
 
 import java.util.List;
 
-/**
- * Created by raili on 03.04.2018.
- */
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Playlist {
-    int id;
-    String name;
-    List<Audio> playlist;
 
-    public Playlist(int id, String name, List<Audio> playlist) {
+public class Playlist extends RealmObject {
+    @PrimaryKey
+    private int id;
+    private String name;
+    private RealmList<Audio> playlist;
+
+    public Playlist(int id, String name, RealmList<Audio> playlist) {
         this.id = id;
         this.name = name;
         this.playlist = playlist;
+    }
+
+    public Playlist() {
     }
 
     public int getId() {
@@ -37,7 +43,7 @@ public class Playlist {
         return playlist;
     }
 
-    public void setPlaylist(List<Audio> playlist) {
+    public void setPlaylist(RealmList<Audio> playlist) {
         this.playlist = playlist;
     }
 }
